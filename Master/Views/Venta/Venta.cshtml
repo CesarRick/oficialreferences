@@ -1,0 +1,187 @@
+﻿@model Master.Models.ViewModel.VentaViewModel
+@{
+    ViewBag.Title = "Venta de Productos";
+}
+
+<h2>Nueva Venta</h2>
+
+<div style="color: #00ff21">
+    @ViewBag.Message
+</div>
+
+
+<div class="container-fluid">
+    <div class="row g-3">        
+    </div>
+    <hr />
+    
+@using (Html.BeginForm("NuevaVenta", "Venta", FormMethod.Post))
+{
+    <div class="row">
+        <div class="form-group">
+
+            <div class="col-md-2">
+                <input type="hidden" id="inputClientId" name="inputClientId" readonly>
+
+                @Html.HiddenFor(d => d.ClienteID)
+            </div>
+
+            <div class="col-md-2">
+                <label for="inputNit" class="form-label">Nit</label>
+                <input type="text" class="form-control" id="inputNit">
+            </div>
+            <div class="col-md-2">
+                <label for="inputNombre" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="inputNombre" readonly>
+            </div>
+
+            <div class="col-md-2">
+                <label for="inputDireccion" class="form-label">Direccion</label>
+                <input type="text" class="form-control" id="inputDireccion" readonly>
+            </div>
+          
+        </div>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="form-group">
+
+            <div class="col-md-1">
+                <label for="inputProductoId" class="form-label">Codigo</label>
+                <input type="text" class="form-control" id="inputProductoId">
+            </div>
+
+            <div class="col-md-3">
+                <label for="inputNombreProducto" class="form-label">Nombre Producto</label>
+                <input type="text" class="form-control" id="inputNombreProducto" readonly>
+            </div>
+
+            <div class="col-md-2">
+                <label for="inputStock" class="form-label">Stock</label>
+                <input type="text" class="form-control" id="inputStock" readonly>
+            </div>
+
+            <div class="col-md-1">
+                <label for="inputPrecio" class="form-label">Precio</label>
+                <input type="text" class="form-control" id="inputPrecio" readonly>
+            </div>
+
+            <div class="col-md-1">
+                <label for="inputCantidad" class="form-label">Cantidad</label>
+                <input type="text" class="form-control" id="inputCantidad">
+            </div>
+
+            <div class="col-md-2">
+                <label for="inputImporte" class="form-label">Importe</label>
+                <input type="text" class="form-control" id="inputImporte" readonly>
+            </div>
+
+            <div class="col-md-2">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <input value="Agregar" type="button" onclick="AgregaConcepto(); return false;" class="btn btn-success" />
+                </div>
+            </div>
+            
+        </div>
+
+        <hr />
+        <div id="divConceptos">
+            <br />
+            <hr />
+            <table id="tablaConceptos" style="width:100%;" class="table table-bordered table-striped">
+                <tr>
+                    <th>Producto</th>
+                    <th>Nombre</th>
+                    <th>Cantidad</th>
+                    <th>Precio</th>
+                    <th>Total</th>
+                </tr>
+            </table>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary" />
+        </div>
+    </div>
+}
+
+    <script>
+        var num = 0;
+        function AgregaConcepto() {
+
+            let Producto = document.getElementById("inputProductoId").value;
+            let Nombre = document.getElementById("inputNombreProducto").value;
+            let Cantidad = document.getElementById("inputCantidad").value;
+            let Precio = document.getElementById("inputPrecio").value;
+            
+
+            //Agregar Tabla
+            let Tabla = document.getElementById("tablaConceptos");
+            let TR = document.createElement("tr");
+
+            let TDProducto = document.createElement("td"); //
+            let TDNombre = document.createElement("td");
+            let TDCantidad = document.createElement("td");            
+            let TDPrecio = document.createElement("td");
+            let TDTotal = document.createElement("td");
+
+            TR.appendChild(TDProducto);
+            TR.appendChild(TDNombre);
+            TR.appendChild(TDCantidad);
+            TR.appendChild(TDPrecio);
+            TR.appendChild(TDTotal);
+
+            TDProducto.innerHTML = Producto;
+            TDNombre.innerHTML = Nombre;
+            TDCantidad.innerHTML = Cantidad;            
+            TDPrecio.innerHTML = Precio;
+            TDTotal.innerHTML = parseFloat(Cantidad) * parseFloat(Precio);
+
+            Tabla.appendChild(TR);
+
+            //agregamos hiddens
+            let DivConceptos = document.getElementById("divConceptos");
+
+            let HiddenIndex = document.createElement("input");
+
+            let HiddenProducto = document.createElement("input");
+            let HiddenNombre = document.createElement("input");
+            let HiddenCantidad = document.createElement("input");            
+            let HiddenPrecio = document.createElement("input");
+
+            HiddenIndex.name = "conceptos.Index";
+            HiddenIndex.value = num;
+            HiddenIndex.type = "hidden";
+
+            HiddenProducto.name = "conceptos[" + num + "].ProductoID";
+            HiddenProducto.value = Producto;
+            HiddenProducto.type = "hidden";
+
+            HiddenNombre.name = "conceptos[" + num + "].Nombre";
+            HiddenNombre.value = Nombre;
+            HiddenNombre.type = "hidden";
+
+            HiddenCantidad.name = "conceptos[" + num + "].Cantidad";
+            HiddenCantidad.value = Cantidad;
+            HiddenCantidad.type = "hidden";
+           
+            HiddenPrecio.name = "conceptos[" + num + "].Precio";
+            HiddenPrecio.value = Precio;
+            HiddenPrecio.type = "hidden";
+
+            DivConceptos.appendChild(HiddenIndex);
+            DivConceptos.appendChild(HiddenProducto);
+            DivConceptos.appendChild(HiddenCantidad);            
+            DivConceptos.appendChild(HiddenPrecio);
+
+            
+            document.getElementById("inputProductoId").value = "";
+            document.getElementById("inputNombreProducto").value = "";
+            document.getElementById("inputCantidad").value = "";
+            document.getElementById("inputPrecio").value = "";
+            document.getElementById("inputStock").value = "";
+            document.getElementById("inputImporte").value = "";
+           
+            num++;
+        }
+    </script>

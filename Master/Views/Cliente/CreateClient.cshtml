@@ -1,0 +1,43 @@
+﻿
+@model Master.Models.ClientModel
+
+@{
+    ViewBag.Title = "Agregar nuevo Cliente";
+}
+
+<h2>Registrar nuevo Cliente</h2>
+
+<div class="container">
+    <div class="row">
+        
+        <div>
+            <p>
+                @Html.ActionLink("Regresar a Inicio", "Index")
+            </p>
+        </div>
+        @using (Html.BeginForm("CreateClient", "Cliente", FormMethod.Post, new { @class = "form", id = "frmClient", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationMessage("Error", new { @class = "text-danger" })
+
+
+            @Html.LabelFor(d => d.Nit)
+            @Html.TextBoxFor(d => d.Nit, new { @class = "form-control" })
+            @Html.ValidationMessage("Nit", new { @class = "text-danger" })
+
+            @Html.LabelFor(d => d.Nombre)
+            @Html.TextBoxFor(d => d.Nombre, new { @class = "form-control" })
+            @Html.ValidationMessage("Nombre", new { @class = "text-danger" })
+
+            @Html.LabelFor(d => d.Direccion)
+            @Html.TextBoxFor(d => d.Direccion, new { @class = "form-control" })
+            @Html.ValidationMessage("Direccion", new { @class = "text-danger" })
+
+            <input type="submit" class="btn btn-primary" value="Guardar" />
+
+        }
+
+
+    </div>
+</div>
+

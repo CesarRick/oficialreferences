@@ -1,0 +1,39 @@
+﻿
+@*@model List<Master.Models.ClientModel>
+
+@{
+    ViewBag.Title = "Lista Clientes";
+}
+
+<h2>Lista de Clientes</h2>
+
+<div class="container">
+    <div class="row">
+
+        @Html.ActionLink("Agregar Cliente", "CreateClient")
+
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <th># Cliente</th>
+                <th>Nit</th>
+                <th>Nombre</th>
+                <th>Direccion</th>
+                <th>Opciones</th>
+            </tr>
+            @foreach (var client in Model)
+            {
+                <tr>
+                    <td>@client.ClienteID</td>
+                    <td>@client.Nit</td>
+                    <td>@client.Nombre</td>
+                    <td>@client.Direccion</td>
+                    <td>
+                        @Html.ActionLink("Editar", "EditClient", new { id = client.ClienteID })                        
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+</div>*@
+

@@ -1,0 +1,41 @@
+﻿
+
+@model List<Master.Models.ViewModel.ListaVentaViewModel>
+
+@{
+    ViewBag.Title = "Lista de Ventas";
+}
+
+<h2>Ventas Realizadas</h2>
+
+<div class="container">
+    <div class="row">
+
+        
+
+        <table class="table table-striped table-hover table-bordered">
+            <tr>
+                <th># Venta</th>
+                <th>Fecha</th>
+                <th>Cliente</th>
+                <th>Nombre</th>
+                <th>Total</th>
+                <th>Opciones</th>
+            </tr>
+            @foreach (var ven in Model)
+            {
+            <tr>
+                <td>@ven.VentaID</td>
+                <td>@ven.Fecha</td>
+                <td>@ven.ClienteID</td>
+                <td>@ven.Nombre</td>
+                <td>@ven.Total</td>
+                <td>
+                    @Html.ActionLink("Ver Reporte", "Reporte", new { id = ven.VentaID })
+                </td>
+            </tr>
+            }
+
+        </table>
+    </div>
+</div>
